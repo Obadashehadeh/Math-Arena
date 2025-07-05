@@ -7,8 +7,8 @@ const successResponse = (data, message = 'Success') => {
     };
 };
 
-const errorResponse = (message, code = 'INTERNAL_ERROR', statusCode = 500) => {
-    return {
+const errorResponse = (message, code = 'INTERNAL_ERROR', statusCode = 500, details = null) => {
+    const errorObj = {
         success: false,
         error: {
             code,
@@ -17,6 +17,12 @@ const errorResponse = (message, code = 'INTERNAL_ERROR', statusCode = 500) => {
         },
         timestamp: new Date().toISOString()
     };
+
+    if (details) {
+        errorObj.error.details = details;
+    }
+
+    return errorObj;
 };
 
 const validationErrorResponse = (errors) => {

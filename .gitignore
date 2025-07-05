@@ -1,1 +1,44 @@
-/node_modules
+# .dockerignore
+node_modules
+npm-debug.log
+.env
+.env.prod
+.env.example
+.git
+.gitignore
+README.md
+.nyc_output
+coverage
+.coverage
+.coverage.*
+Dockerfile
+.dockerignore
+tests
+*.test.js
+.idea
+logs
+.DS_Store
+*.log
+
+# Scripts (only needed for host)
+scripts/deploy.sh
+scripts/monitor.sh
+scripts/test-api.sh
+
+# Documentation
+docs/
+*.md
+
+# Development files
+.vscode/
+*.swp
+*.swo
+*~
+
+# Backup files
+backup-*
+*.backup
+
+# OS generated files
+Thumbs.db
+ehthumbs.db

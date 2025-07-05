@@ -1,0 +1,154 @@
+# docker-compose.prod.yml
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5
+    container_name: math-arena-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: math-arena
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - math-arena-network
+    command: --quiet
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: math-arena-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - math-arena-network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  auth-service:
+    build: .
+    container_name: math-arena-auth
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=auth-service
+      - AUTH_SERVICE_PORT=3001
+      - MONGODB_URI=mongodb://mathapp:${MONGO_PASSWORD}@mongodb:27017/math-arena
+      - RABBITMQ_URL=amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672
+      - JWT_SECRET=${JWT_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL}
+    command: ["node", "services/auth-service/index.js"]
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - math-arena-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  game-service:
+    build: .
+    container_name: math-arena-game
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=game-service
+      - GAME_SERVICE_PORT=3002
+      - MONGODB_URI=mongodb://mathapp:${MONGO_PASSWORD}@mongodb:27017/math-arena
+      - RABBITMQ_URL=amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672
+      - JWT_SECRET=${JWT_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL}
+    command: ["node", "services/game-service/index.js"]
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - math-arena-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  players-service:
+    build: .
+    container_name: math-arena-players
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=players-service
+      - PLAYERS_SERVICE_PORT=3003
+      - MONGODB_URI=mongodb://mathapp:${MONGO_PASSWORD}@mongodb:27017/math-arena
+      - RABBITMQ_URL=amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672
+      - JWT_SECRET=${JWT_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL}
+    command: ["node", "services/players-service/index.js"]
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - math-arena-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  orchestrator-service:
+    build: .
+    container_name: math-arena-orchestrator
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - SERVICE_NAME=orchestrator-service
+      - ORCHESTRATOR_PORT=3000
+      - RABBITMQ_URL=amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672
+      - JWT_SECRET=${JWT_SECRET}
+      - RATE_LIMIT_WINDOW_MS=${RATE_LIMIT_WINDOW_MS}
+      - RATE_LIMIT_MAX_REQUESTS=${RATE_LIMIT_MAX_REQUESTS}
+      - LOG_LEVEL=${LOG_LEVEL}
+    command: ["node", "services/orchestrator-service/index.js"]
+    depends_on:
+      - rabbitmq
+      - auth-service
+      - game-service
+      - players-service
+    networks:
+      - math-arena-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mongodb_data:
+  rabbitmq_data:
+
+networks:
+  math-arena-network:
+    driver: bridge

@@ -1,4 +1,3 @@
-// shared/config/logger.js
 const winston = require('winston');
 const path = require('path');
 
@@ -33,55 +32,3 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = logger;
-
-// shared/middleware/requestLogger.js
-const logger = require('../config/logger');
-
-const requestLogger = (serviceName) => {
-    return (req, res, next) => {
-        const start = Date.now();
-
-        res.on('finish', () => {
-            const duration = Date.now() - start;
-            logger.info('Request completed', {
-                service: serviceName,
-                method: req.method,
-                url: req.url,
-                statusCode: res.statusCode,
-                duration: `${duration}ms`,
-                userAgent: req.get('User-Agent'),
-                ip: req.ip
-            });
-        });
-
-        next();
-    };
-};
-
-module.exports = requestLogger;
-
-// shared/middleware/errorHandler.js
-const logger = require('../config/logger');
-const { errorResponse } = require('../utils/response');
-
-const errorHandler = (serviceName) => {
-    return (error, req, res, next) => {
-        logger.error('Unhandled error', {
-            service: serviceName,
-            error: error.message,
-            stack: error.stack,
-            method: req.method,
-            url: req.url,
-            body: req.body,
-            headers: req.headers
-        });
-
-        if (res.headersSent) {
-            return next(error);
-        }
-
-        res.status(500).json(errorResponse('Internal server error', 'INTERNAL_ERROR', 500));
-    };
-};
-
-module.exports = errorHandler;

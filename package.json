@@ -1,7 +1,7 @@
 {
   "name": "math-arena",
   "version": "1.0.0",
-  "description": "Math Arena Game - Microservices Backend with comprehensive monitoring and production-ready features",
+  "description": "Math Arena Game - Microservices Backend",
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run start:auth\" \"npm run start:game\" \"npm run start:players\" \"npm run start:orchestrator\"",
@@ -9,6 +9,7 @@
     "start:game": "nodemon services/game-service/index.js",
     "start:players": "nodemon services/players-service/index.js",
     "start:orchestrator": "nodemon services/orchestrator-service/index.js",
+    "start:simple": "concurrently \"nodemon services/auth-service/index-simple.js\" \"nodemon services/orchestrator-service/index-simple.js\"",
     "start:prod": "concurrently \"node services/auth-service/index.js\" \"node services/game-service/index.js\" \"node services/players-service/index.js\" \"node services/orchestrator-service/index.js\"",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -50,26 +51,10 @@
     "game",
     "microservices",
     "nodejs",
-    "rabbitmq",
     "mongodb",
     "jwt",
-    "authentication",
-    "real-time",
-    "scalable",
-    "production-ready"
+    "authentication"
   ],
   "author": "Math Arena Team",
-  "license": "MIT",
-  "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=6.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/math-arena.git"
-  },
-  "bugs": {
-    "url": "https://github.com/your-username/math-arena/issues"
-  },
-  "homepage": "https://github.com/your-username/math-arena#readme"
+  "license": "MIT"
 }

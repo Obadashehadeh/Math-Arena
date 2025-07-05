@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3c2be10-2eca-45f2-a757-b551964bfa8f" name="Changes" comment="First commit" />
+    <list default="true" id="f3c2be10-2eca-45f2-a757-b551964bfa8f" name="Changes" comment="update the project">
+      <change afterPath="$PROJECT_DIR$/services/orchestrator-service/index-simple.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.prod.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.prod.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/healthcheck.js" beforeDir="false" afterPath="$PROJECT_DIR$/healthcheck.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/mongo-init.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/mongo-init.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/monitor.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/monitor.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/setupIndexes.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/setupIndexes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/test-api.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/test-api.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/config/logger.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/config/logger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/config/rabbitmq.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/config/rabbitmq.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/middleware/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/middleware/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/middleware/errorHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/middleware/errorHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/middleware/requestLogger.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/middleware/requestLogger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/middleware/security.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/middleware/security.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/middleware/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/middleware/validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/utils/circuitBreaker.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/utils/circuitBreaker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/utils/response.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/utils/response.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,6 +76,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2024.2.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -80,7 +103,7 @@
       <updated>1751480490224</updated>
       <workItem from="1751480491354" duration="304000" />
       <workItem from="1751480814529" duration="6424000" />
-      <workItem from="1751658754156" duration="1533000" />
+      <workItem from="1751658754156" duration="7041000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -90,7 +113,31 @@
       <option name="project" value="LOCAL" />
       <updated>1751659826860</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1751660383593</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1751660383593</updated>
+    </task>
+    <task id="LOCAL-00003" summary="First commit">
+      <option name="closed" value="true" />
+      <created>1751660422922</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1751660422922</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update the project">
+      <option name="closed" value="true" />
+      <created>1751719266418</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1751719266418</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -98,6 +145,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="update the project" />
+    <option name="LAST_COMMIT_MESSAGE" value="update the project" />
   </component>
 </project>
